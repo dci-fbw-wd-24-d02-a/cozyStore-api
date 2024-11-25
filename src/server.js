@@ -3,10 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { handleError } from "./utils/handleError.js";
 import { appRouter } from "./routers/AppRouter.js";
-/* import { connectDb } from "../utils/connectDb.js"; */
+import { connectDb } from "./utils/connectDb.js";
 
 dotenv.config();
-const apiUrl = process.env.API_URL;
+const apiUrl = process.env.MONGODB_URI;
 const port = process.env.PORT;
 
 const app = express();
@@ -28,7 +28,10 @@ const startServer = async () => {
 
 startServer();
 
-/* connectDb(apiUrl)
+connectDb(apiUrl)
   .then(() => startServer())
-  .catch(() => process.exit(1));
- */
+  .catch((e) => {
+    console.log(e);
+
+    process.exit(1);
+  });
